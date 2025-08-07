@@ -4,6 +4,7 @@ python-dotenv==1.1.1
 sib-api-v3-sdk
 mux-python
 gunicorn
+pytz
 
 # These are sub-dependencies and optional:
 blinker==1.9.0
