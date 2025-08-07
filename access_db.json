@@ -1,0 +1,239 @@
+{
+  "token123": {
+    "email": "abc@example.com",
+    "devices": [],
+    "expires": "2025-05-26 00:00:00"
+  },
+  "d6beba1e": {
+    "email": "tester@truboxing.co",
+    "devices": [],
+    "expires": "2025-05-26T00:00:00+08:00"
+  },
+  "22f31981": {
+    "email": "monsterawab@gmail.com",
+    "devices": [],
+    "expires_at": "2025-05-25T20:28:09.994588+08:00"
+  },
+  "505eb821": {
+    "email": "monsterawab@gmail.com",
+    "devices": [],
+    "expires_at": "2025-05-25T20:28:24.161668+08:00"
+  },
+  "c56417f7": {
+    "email": "monsterawab@gmail.com",
+    "devices": [],
+    "expires_at": "2025-05-25T22:10:38.685637+08:00"
+  },
+  "3bb6f361": {
+    "email": "truboxingmy@gmail.com",
+    "devices": [],
+    "expires_at": "2025-05-25T23:32:43.196540+08:00"
+  },
+  "dceb5714": {
+    "email": "truboxingmy@gmail.com",
+    "devices": [],
+    "expires_at": "2025-05-25T23:34:08.009670+08:00"
+  },
+  "aaec219e": {
+    "email": "monsterawab@gmail.com",
+    "devices": [],
+    "expires_at": "2025-05-26T20:56:40.920949+08:00"
+  },
+  "903f9daa": {
+    "email": "monsterawab@gmail.com",
+    "devices": [
+      "127.0.0.1_Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Safari/537.36 Edg/136.0.0.0"
+    ],
+    "expires_at": "2025-05-26T21:06:50.129635+08:00"
+  },
+  "0dc76843": {
+    "email": "awabmhdi@gmail.com",
+    "devices": [
+      "127.0.0.1_Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Safari/537.36 Edg/136.0.0.0"
+    ],
+    "expires_at": "2025-05-26T21:08:45.354740+08:00"
+  },
+  "29d24515": {
+    "email": "awabmhdi@gmail.com",
+    "devices": [
+      "127.0.0.1_Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) SamsungBrowser/28.0 Chrome/130.0.0.0 Mobile Safari/537.36"
+    ],
+    "expires_at": "2025-05-26T21:10:06.432285+08:00"
+  },
+  "96cc01b5": {
+    "email": "screamloud99@gmail.com",
+    "devices": [
+      "127.0.0.1_Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Safari/537.36",
+      "127.0.0.1_WhatsApp/2.2518.3 W"
+    ],
+    "expires_at": "2025-05-26T21:12:42.204787+08:00"
+  },
+  "83c9e5f5": {
+    "email": "awabmhdi@gmail.com",
+    "devices": [
+      "127.0.0.1_Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Safari/537.36 Edg/136.0.0.0",
+      "127.0.0.1_WhatsApp/2.2518.3 W"
+    ],
+    "expires_at": "2025-05-26T21:26:39.620302+08:00"
+  },
+  "766537cd": {
+    "email": "awabmhdi@gmail.com",
+    "devices": [
+      "127.0.0.1_chrome",
+      "127.0.0.1_whatsapp"
+    ],
+    "expires_at": "2025-05-26T21:41:03.535719+08:00"
+  },
+  "2f4053cf": {
+    "email": "rtygfuhnji.12rt@gmail.com",
+    "devices": [
+      "127.0.0.1_safari",
+      "127.0.0.1_whatsapp"
+    ],
+    "expires_at": "2025-05-26T22:03:52.628217+08:00"
+  },
+  "d9b1a033": {
+    "email": "awabmhdi@gmail.com",
+    "devices": [
+      "161.142.152.82_chrome"
+    ],
+    "expires_at": "2025-05-29T19:05:32.349043+08:00"
+  },
+  "e5370eb3": {
+    "email": "abdallahomer0115670791@gmail.com",
+    "devices": [
+      "161.142.152.82_chrome"
+    ],
+    "expires_at": "2025-05-29T19:55:18.778306+08:00"
+  },
+  "5e9c9099": {
+    "email": "awabmhdi@gmail.com",
+    "devices": [
+      "113.211.215.84_chrome"
+    ],
+    "expires_at": "2025-05-29T23:09:26.738108+08:00"
+  },
+  "658f1d52": {
+    "email": "awabkingo@gmail.com",
+    "devices": [],
+    "expires_at": "2025-05-30T02:39:40.352636+08:00"
+  },
+  "968cd0fe": {
+    "email": "awabkingo@gmail.com",
+    "devices": [],
+    "expires_at": "2025-05-30T02:43:02.152222+08:00"
+  },
+  "d2552cfd": {
+    "email": "awabkingo@gmail.com",
+    "devices": [],
+    "expires_at": "2025-05-30T03:00:27.233107+08:00"
+  },
+  "d758b55a": {
+    "email": "awabmhdi@gmail.com",
+    "devices": [],
+    "expires_at": "2025-06-09T23:23:53.593511+08:00"
+  },
+  "cceb05c3": {
+    "email": "awabkingo@gmail.com",
+    "devices": [],
+    "expires_at": "2025-06-09T23:27:05.003083+08:00"
+  },
+  "f8a9c246": {
+    "email": "screamloud99@gmail.com",
+    "devices": [
+      "161.142.152.131_chrome"
+    ],
+    "expires_at": "2025-06-09T23:29:47.976591+08:00"
+  },
+  "64fa7d6e": {
+    "email": "awabrock@gmail.com",
+    "devices": [
+      "161.142.152.131_chrome"
+    ],
+    "expires_at": "2025-06-09T23:37:57.252863+08:00"
+  },
+  "bd217b52": {
+    "email": "awabmhdi@gmail.com",
+    "devices": [],
+    "expires_at": "2025-06-10T15:43:00.718716+08:00"
+  },
+  "8a4fa71b": {
+    "email": "awabkingo@gmail.com",
+    "devices": [
+      "161.142.152.131_chrome"
+    ],
+    "expires_at": "2025-06-10T15:45:20.434261+08:00"
+  },
+  "cefe8a42": {
+    "email": "awabrock@gmail.com",
+    "devices": [
+      "8be07c2e867a9223afbd60acf9c1e07a8e7a76b3bca1c8c10a98880c6cd745cb"
+    ],
+    "expires_at": "2025-06-10T15:50:56.197981+08:00",
+    "device_info": {
+      "ip": "161.142.152.131",
+      "userAgent": "Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) SamsungBrowser/28.0 Chrome/130.0.0.0 Mobile Safari/537.36",
+      "screenSize": "384x857",
+      "timezone": "Asia/Kuala_Lumpur",
+      "identity": "8be07c2e867a9223afbd60acf9c1e07a8e7a76b3bca1c8c10a98880c6cd745cb",
+      "timestamp": "2025-06-03 15:51:10.046556+08:00"
+    }
+  },
+  "610b1476": {
+    "email": "awabrock@gmail.com",
+    "devices": [],
+    "expires_at": "2025-06-10T16:04:56.932186+08:00"
+  },
+  "d24e83bf": {
+    "email": "awabkingo@gmail.com",
+    "devices": [
+      "d96fc29e4dd91cbbd0495beadbbf7d907bc3177146549f4fac41cb1f1f912138"
+    ],
+    "expires_at": "2025-06-10T16:15:11.920312+08:00",
+    "device_info": {
+      "ip": "203.82.75.134",
+      "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Safari/537.36",
+      "screenSize": "1366x768",
+      "timezone": "Asia/Kuala_Lumpur",
+      "identity": "d96fc29e4dd91cbbd0495beadbbf7d907bc3177146549f4fac41cb1f1f912138",
+      "timestamp": "2025-06-03 16:32:21.354190+08:00"
+    }
+  },
+  "c9ee4ffd": {
+    "email": "awabrock@gmail.com",
+    "devices": [
+      "8be07c2e867a9223afbd60acf9c1e07a8e7a76b3bca1c8c10a98880c6cd745cb"
+    ],
+    "expires_at": "2025-06-10T16:18:25.067190+08:00",
+    "device_info": {
+      "ip": "161.142.152.131",
+      "userAgent": "Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) SamsungBrowser/28.0 Chrome/130.0.0.0 Mobile Safari/537.36",
+      "screenSize": "384x857",
+      "timezone": "Asia/Kuala_Lumpur",
+      "identity": "8be07c2e867a9223afbd60acf9c1e07a8e7a76b3bca1c8c10a98880c6cd745cb",
+      "timestamp": "2025-06-03 16:18:51.397667+08:00"
+    }
+  },
+  "0b20e00d": {
+    "email": "screamloud99@gmail.com",
+    "devices": [
+      "6f6fd60cd19e4dc58e194fc3155bb74852c0974c84e696dd297087eaa07150a0"
+    ],
+    "expires_at": "2025-06-10T20:25:55.117540+08:00",
+    "device_info": {
+      "ip": "113.211.214.52",
+      "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Safari/537.36",
+      "screenSize": "1920x1080",
+      "timezone": "Asia/Kuala_Lumpur",
+      "identity": "6f6fd60cd19e4dc58e194fc3155bb74852c0974c84e696dd297087eaa07150a0",
+      "timestamp": "2025-06-03 20:26:36.436773+08:00"
+    }
+  },
+  "e476c757": {
+    "email": "awabmhdi@gmail.com",
+    "devices": [],
+    "expires_at": "2025-08-14T17:26:46.432111+08:00",
+    "playback_id": "DaJHSDosZ9yWeQx7MDa12eM99ImS02MRT1E2FBWTGYkk",
+    "stream_key": "c0865ded-c793-99d8-1979-922926533f43"
+  }
+}

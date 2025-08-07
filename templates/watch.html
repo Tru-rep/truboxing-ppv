@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>🎥 Truboxing Livestream</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 20px;
+      font-family: Arial, sans-serif;
+      background-color: #000;
+      color: #fff;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.5s ease;
+    }
+    #player-container {
+      transition: all 0.5s ease;
+    }
+    video {
+      width: 100%;
+      max-width: 800px;
+      border-radius: 10px;
+      background-color: black;
+      box-shadow: 0 0 15px rgba(0,0,0,0.5);
+      transition: all 0.5s ease;
+    }
+    h2 { margin-bottom: 10px; }
+    p.notice { font-size: 14px; color: #bbb; margin-top: 15px; }
+  </style>
+  <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
+</head>
+<body>
+
+  <h2>✅ You're in!</h2>
+  <p id="loading" style="color:yellow;">Verifying device, please wait...</p>
+
+  <div id="player-container">
+    <video id="video" controls autoplay playsinline muted></video>
+  </div>
+
+<script>
+// ✅ Fingerprint collection
+async function getFingerprint() {
+    const timezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+    const screenSize = `${window.screen.width}x${window.screen.height}`;
+    const userAgent = navigator.userAgent;
+    return { timezone, screenSize, userAgent };
+}
+
+// ✅ Cookie helper
+function getCookie(name) {
+    const match = document.cookie.match(new RegExp('(^| )' + name + '=([^;]+)'));
+    if (match) return match[2];
+    return null;
+}
+
+// ✅ Device verification
+async function sendFingerprint() {
+    const token = new URLSearchParams(window.location.search).get("v");
+    if (!token) {
+        alert("❌ Invalid access.");
+        window.location.href = "/";
+        return false;
+    }
+
+    const identityCookie = getCookie("device_identity");
+    if (identityCookie) {
+        console.log("✅ Using stored device_identity from cookie");
+        const response = await fetch(`/verify?v=${token}&id=${identityCookie}`);
+        if (response.status !== 200) {
+            alert("🚫 Access denied");
+            window.location.href = "/";
+            return false;
+        }
+        return true;
+    }
+
+    const data = await getFingerprint();
+    const response = await fetch(`/verify?v=${token}`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(data)
+    });
+
+    if (response.status !== 200) {
+        alert("🚫 Access denied");
+        window.location.href = "/";
+        return false;
+    }
+
+    const respJson = await response.json();
+    if (respJson.identity) {
+        document.cookie = `device_identity=${respJson.identity}; path=/; max-age=604800; SameSite=Strict; Secure`;
+    }
+    return true;
+}
+
+// ✅ Main execution block
+(async () => {
+    const verified = await sendFingerprint();
+    if (!verified) return;
+
+    document.getElementById('loading').style.display = 'none';
+
+    const video = document.getElementById('video');
+    const videoSrc = "{{ playback_url }}";
+    if (Hls.isSupported()) {
+        const hls = new Hls();
+        hls.loadSource(videoSrc);
+        hls.attachMedia(video);
+    } else if (video.canPlayType('application/vnd.apple.mpegurl')) {
+        video.src = videoSrc;
+    } else {
+        alert("Your browser doesn't support HLS playback.");
+    }
+})();
+
+// ✅ Miniplayer logic on tab switch
+document.addEventListener('visibilitychange', () => {
+    const playerContainer = document.getElementById('player-container');
+    if (document.hidden) {
+        playerContainer.style.position = "fixed";
+        playerContainer.style.bottom = "20px";
+        playerContainer.style.right = "20px";
+        playerContainer.style.width = "300px";
+        playerContainer.style.zIndex = "9999";
+    } else {
+        playerContainer.style.position = "static";
+        playerContainer.style.width = "100%";
+    }
+});
+</script>
+
+  <p class="notice">⚠️ This stream is limited to 2 devices only. Enjoy the fight!</p>
+
+</body>
+</html>
