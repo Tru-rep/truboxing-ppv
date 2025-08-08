@@ -1,5 +1,5 @@
 # ========================
-# app.py — Best Version (SQLite + Device Lock 2 + ToyyibPay + Optional MUX/Email + Admin Auth)
+# app.py — Best Version (SQLite + Device Lock 2 + ToyyibPay Sandbox + Optional MUX/Email + Admin Auth)
 # ========================
 
 import os
@@ -33,15 +33,28 @@ except Exception:
 load_dotenv()
 app = Flask(__name__)
 
+# -------- Temp logging (remove later) --------
+@app.before_request
+def _log_req():
+    try:
+        print(f"➡ {request.method} {request.path} qs={dict(request.args)}")
+    except Exception:
+        pass
+
 # ======================== ENV / Config ========================
 DB_PATH = os.getenv("DB_PATH", "tokens.db")
 
-# ToyyibPay
+# Base URL for your deployed app (Render)
+BASE_URL = os.getenv("BASE_URL", "https://truboxing-ppv.onrender.com")
+
+# ToyyibPay (KEEP sandbox)
 TOYYIB_KEY = os.getenv("TOYYIB_KEY", "")
 CATEGORY_CODE = os.getenv("CATEGORY_CODE", "")
 TOYYIB_BASE = os.getenv("TOYYIB_BASE", "https://dev.toyyibpay.com")  # prod: https://toyyibpay.com
-RETURN_URL = os.getenv("RETURN_URL", "http://127.0.0.1:5000/generate-token")
-CALLBACK_URL = os.getenv("CALLBACK_URL", "http://127.0.0.1:5000/payment-callback")
+
+# Return/Callback (default to BASE_URL if not explicitly set)
+RETURN_URL = os.getenv("RETURN_URL", f"{BASE_URL}/generate-token")
+CALLBACK_URL = os.getenv("CALLBACK_URL", f"{BASE_URL}/payment-callback")
 
 # Email (optional)
 BREVO_API_KEY = os.getenv("BREVO_API_KEY", "")
@@ -95,7 +108,6 @@ init_db()
 # ======================== Utilities ========================
 def admin_guard():
     if not ADMIN_TOKEN:
-        # If you forget to set ADMIN_TOKEN, block access rather than leaving it open.
         abort(403, description="Admin disabled: missing ADMIN_TOKEN")
     hdr = request.headers.get("X-Admin-Token", "")
     if hdr != ADMIN_TOKEN:
@@ -131,8 +143,7 @@ def create_mux_stream_if_needed():
     if FIXED_PLAYBACK_ID:
         return FIXED_PLAYBACK_ID, None
     if not (MUX_TOKEN_ID and MUX_TOKEN_SECRET and mux_python and MuxConfiguration):
-        # No MUX config – use a placeholder (frontend can swap to HLS or show offline)
-        return "abc123", None
+        return "abc123", None  # placeholder/fallback
 
     cfg = MuxConfiguration()
     cfg.username = MUX_TOKEN_ID
@@ -150,7 +161,6 @@ def create_mux_stream_if_needed():
         return playback_id, stream_key
     except MuxApiException as e:
         print(f"❌ MUX error: {e}")
-        # Fallback so users aren't blocked
         return "abc123", None
 
 def safe_get(d, key, default=""):
@@ -206,7 +216,7 @@ def initiate_payment():
         return f"❌ Error creating bill: {str(e)}", 500
 
 # “Instant redirect” page – if we can map email -> token, jump straight to /watch/<token>
-@app.route("/generate-token")
+@app.route("/generate-token", methods=["GET"])
 def generate_token_redirect():
     email = request.args.get("email", "").strip()
     if not email:
@@ -219,21 +229,20 @@ def generate_token_redirect():
             return redirect(f"/watch/{row[0]}")
     return render_template("thank_you.html")
 
-# ToyyibPay callback – trusted server-to-server
-@app.route("/payment-callback", methods=["POST"])
+# ToyyibPay callback – can be POST or GET; may use `status` or `status_id`
+@app.route("/payment-callback", methods=["POST", "GET"])
 def payment_callback():
-    data = request.form.to_dict()
-    status = data.get("status")
+    data = request.form.to_dict() if request.method == "POST" else request.args.to_dict()
+    status = data.get("status") or data.get("status_id")
     order_id = data.get("order_id")
     email = order_id[4:] if order_id and order_id.startswith("TRX-") else None
 
     if status != "1" or not email:
+        print(f"🔎 Bad callback payload: method={request.method} data={data}")
         return "❌ Payment not successful or email missing", 400
 
     token = uuid.uuid4().hex[:8]
     expires_at = generate_expiry(days=7)
-
-    # Choose playback id
     playback_id, stream_key = create_mux_stream_if_needed()
 
     with sqlite3.connect(DB_PATH) as conn:
@@ -242,16 +251,13 @@ def payment_callback():
             "INSERT INTO tokens (token, email, expires_at, playback_id, stream_key) VALUES (?, ?, ?, ?, ?)",
             (token, email, expires_at, playback_id, stream_key)
         )
-        c.execute(
-            "INSERT OR REPLACE INTO email_tokens (email, token) VALUES (?, ?)",
-            (email, token)
-        )
+        c.execute("INSERT OR REPLACE INTO email_tokens (email, token) VALUES (?, ?)", (email, token))
         conn.commit()
 
     watch_link = f"{request.url_root.rstrip('/')}/watch/{token}"
     send_watch_link(email, watch_link)
-    print(f"✅ Token created for {email}: {token} (playback_id={playback_id})")
-    return "✅ Token + Stream ready", 200
+    print(f"✅ Callback OK for {email}: token={token}, playback_id={playback_id}")
+    return "OK", 200
 
 # ======================== Watch + Verify ========================
 @app.route("/watch/<token>")
@@ -340,7 +346,6 @@ def admin_logs():
         c = conn.cursor()
         c.execute("SELECT token, device_hash, ip, user_agent, screen_size, timezone, timestamp FROM device_access ORDER BY timestamp DESC")
         rows = c.fetchall()
-    # Expect an admin_logs.html template that iterates `logs`
     return render_template("admin_logs.html", logs=rows)
 
 @app.route("/admin/kick", methods=["POST"])
@@ -366,7 +371,6 @@ def admin_add_device():
     now = str(get_now())
     with sqlite3.connect(DB_PATH) as conn:
         c = conn.cursor()
-        # respect 2-device cap
         c.execute("SELECT COUNT(DISTINCT device_hash) FROM device_access WHERE token = ?", (token,))
         used = c.fetchone()[0] or 0
         if used >= 2:
