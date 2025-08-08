@@ -139,7 +139,10 @@ def send_watch_link(email: str, link: str):
         print(f"❌ Email failed to {email}: {e}")
 
 def create_mux_stream_if_needed():
-    """Return (playback_id, stream_key or None). Uses fixed playback if provided."""
+    """
+    Return (playback_id, stream_key or None).
+    Uses fixed playback if provided. Handles SDK response data safely.
+    """
     if FIXED_PLAYBACK_ID:
         return FIXED_PLAYBACK_ID, None
     if not (MUX_TOKEN_ID and MUX_TOKEN_SECRET and mux_python and MuxConfiguration):
@@ -155,11 +158,17 @@ def create_mux_stream_if_needed():
             playback_policy=["public"],
             new_asset_settings=mux_python.CreateAssetRequest(playback_policy=["public"])
         )
-        live_stream = live_api.create_live_stream(req)
-        playback_id = live_stream.playback_ids[0].id
-        stream_key = live_stream.stream_key
+        live = live_api.create_live_stream(req)
+        # Newer SDK returns LiveStreamResponse with .data
+        ls = getattr(live, "data", live)
+        pids = getattr(ls, "playback_ids", []) or []
+        playback_id = pids[0].id if pids else None
+        stream_key = getattr(ls, "stream_key", None)
+
+        if not playback_id:
+            playback_id = "abc123"  # fallback so users aren't blocked
         return playback_id, stream_key
-    except MuxApiException as e:
+    except Exception as e:
         print(f"❌ MUX error: {e}")
         return "abc123", None
 
@@ -203,6 +212,12 @@ def initiate_payment():
         "billChargeToCustomer": 1,
         "billExpiryDays": 3
     }
+
+    # TEMP: log the URLs used to create the bill
+    print("🧾 Creating bill with:", {
+        "billReturnUrl": payload["billReturnUrl"],
+        "billCallbackUrl": payload["billCallbackUrl"]
+    })
 
     try:
         res = requests.post(f"{TOYYIB_BASE}/index.php/api/createBill", data=payload, timeout=30)
